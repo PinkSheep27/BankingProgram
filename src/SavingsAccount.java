@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class SavingsAccount extends Account{
-    //private double balance;
+    private double balance;
 
     public SavingsAccount()throws IOException {
         super();

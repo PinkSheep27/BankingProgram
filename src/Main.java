@@ -654,6 +654,7 @@ prints out the menu
     }
 
     public static void pause(Scanner output) {
+        String tempstr;
         System.out.println();
         System.out.print("press ENTER to continue");
         tempstr = output.nextLine();

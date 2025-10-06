@@ -1,4 +1,6 @@
 import java.util.Random;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public abstract class genAccount {
     private Depositor depositor;
