@@ -1,0 +1,13 @@
+John Doe 123445678 123456 Savings open 200.55
+Jim Beam 234556789 567890 Checking open 1234.56
+Jane Eyre 345667890 987654 Savings open 2.33
+Tom Sawyer 456789012 234567 CD open 500.00 7/22/2022
+Huck Finn 567889012 345678 Checking closed 123.98
+John Doe 123445678 222222 CD open 5000.00 12/12/2023
+John Doe 123445678 333333 Checking closed 999.99
+Huck Finn 567889012 654321 Savings open 0.00
+Jack Spratt 678990123 785609 Savings open 333.33
+Jane Doe 456789012 389765 Checking open 888.56
+Jane Doe 456789012 123123 Savings open 8765.43
+Dingle Rudik 001002003 666666 CD closed 700.43 1/23/2023
+Steven Gori 777777777 777777 CD open 400.12 1/25/2023
