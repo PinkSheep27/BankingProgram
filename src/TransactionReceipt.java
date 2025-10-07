@@ -101,6 +101,91 @@ public class TransactionReceipt extends genTransactionReceipt{
         termOfCD = receipt.termOfCD;
     }
 
+    public String toString() {
+    // This part handles the detailed receipts for specific actions.
+    if ("Deleting".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        }
+        return String.format("Account Type: " + accountType + "\nAccount #" + accountNumber + " has Been Deleted.");
+    }
+    if ("Reopening".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        }
+        return String.format("Account #" + transactionTicket.getAccountNumber() + " Successfully Reopened.");
+    }
+    if ("Closing".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        }
+        return String.format("Account #" + transactionTicket.getAccountNumber() + " Successfully Closed.");
+    }
+    if ("Check".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        }
+        return String.format("Check Cleared\nAccount #" + accountNumber + " has Withdrawn $%.2f.\nOld Account Balance is: $%.2f \nNew Account Balance is: $%.2f", transactionAmount, preTransactionBalance, postTransactionBalance);
+    }
+    if ("New Account".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        }
+        if (transactionTicket.getTypeAccount().equals("CD")) {
+            String stringDate = String.format("%02d/%02d/%4d", transactionTicket.getTransactionDate().get(Calendar.MONTH) + 1, transactionTicket.getTransactionDate().get(Calendar.DAY_OF_MONTH), transactionTicket.getTransactionDate().get(Calendar.YEAR));
+            return String.format("Account Number:%s\nAccount Type:%s\nMaturity Date:%s\nBalance: $%.2f", accountNumber, transactionTicket.getTypeAccount(), stringDate, transactionAmount);
+        } else {
+            return String.format("Account Type:%s\nAccount Number:%s\nBalance: $%.2f", transactionTicket.getTypeAccount(), accountNumber, transactionTicket.getTransactionAmount());
+        }
+    }
+    if ("Balance".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        } else if (accountType.equals("CD")) {
+            String stringDate = String.format("%02d/%02d/%4d", postTransactionMaturityDate.get(Calendar.MONTH) + 1, postTransactionMaturityDate.get(Calendar.DAY_OF_MONTH), postTransactionMaturityDate.get(Calendar.YEAR));
+            return String.format("Account Number:%s\nAccount Type:%s\nMaturity Date:%s\nBalance: $%.2f", accountNumber, accountType, stringDate, postTransactionBalance);
+        } else {
+            return String.format("Account Type:%s\nAccount Number:%s\nBalance: $%.2f", accountType, accountNumber, postTransactionBalance);
+        }
+    }
+    if ("Deposit".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        } else if (accountType.equals("CD")) {
+            String stringDate = String.format("%02d/%02d/%4d", postTransactionMaturityDate.get(Calendar.MONTH) + 1, postTransactionMaturityDate.get(Calendar.DAY_OF_MONTH), postTransactionMaturityDate.get(Calendar.YEAR));
+            return String.format("Account Number:%s\nAccount Type:%s\nTerm Of CD:%s\nMaturity Date:%s\nPre Balance: $%.2f\nDeposit Amount: $%.2f\nPost Balance: $%.2f", accountNumber, accountType, stringDate, termOfCD, preTransactionBalance, transactionAmount, postTransactionBalance);
+        } else {
+            return String.format("Account Type:%s\nAccount Number:%s\nPre Balance: $%.2f\nDeposit Amount:$%.2f\nPost Balance:$%.2f", accountType, accountNumber, preTransactionBalance, transactionAmount, postTransactionBalance);
+        }
+    }
+    if ("Withdrawal".equals(typeTransaction)) {
+        if (!successIndicatorFlag) {
+            return String.format(reasonForFailure);
+        } else if (accountType.equals("CD")) {
+            String stringDate = String.format("%02d/%02d/%4d", postTransactionMaturityDate.get(Calendar.MONTH) + 1, postTransactionMaturityDate.get(Calendar.DAY_OF_MONTH), postTransactionMaturityDate.get(Calendar.YEAR));
+            return String.format("Account Number:%s\nAccount Type:%s\nTerm Of CD:%s\nMaturity Date:%s\nPre Balance: $%.2f\nWithdrawal Amount: $%.2f\nPost Balance: $%.2f", accountNumber, accountType, stringDate, termOfCD, preTransactionBalance, transactionAmount, postTransactionBalance);
+        } else {
+            return String.format("Account Type:%s\nAccount Number:%s\nPre Balance: $%.2f\nWithdrawal Amount: $%.2f\nPost Balance: $%.2f", accountType, accountNumber, preTransactionBalance, transactionAmount, postTransactionBalance);
+        }
+    }
+
+    // **NEW/MODIFIED PART**
+    // This part handles the single-line output for the transaction history table.
+    else {
+        Calendar today = Calendar.getInstance();
+        String todayS = String.format("%02d/%02d/%04d", today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.YEAR));
+
+        // Using a more structured format for history to avoid alignment issues
+        return String.format("%-12s %-12s $%8.2f %-8s $%9.2f      %-40s",
+                todayS,
+                typeTransaction,
+                transactionAmount,
+                transactionStatus,
+                balance,
+                reasonForFailure);
+    }
+}
+    /* OLD CODE
     public String toString(){
         if(typeTransaction.equals("Deleting")) {
             if (successIndicatorFlag == false) {
@@ -169,6 +254,7 @@ public class TransactionReceipt extends genTransactionReceipt{
             return String.format("%10s %12s %8.2f %10s %7.2f      %10s", todayS, typeTransaction, transactionAmount, transactionStatus, balance, reasonForFailure);
         }
     }
+        */
 
     protected void setReasonForFailure(String RFF){
         reasonForFailure = RFF;

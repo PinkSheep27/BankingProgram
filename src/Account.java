@@ -95,37 +95,38 @@ public class Account extends genAccount{
         String status = readString(STATUS_LEN);
         double acctBal = history.readDouble();
         String errorStr = readString(REASON_LEN);
+        String date = readString(10);
 
-        TransactionTicket ticket = new TransactionTicket(getAcctNum(), Calendar.getInstance(), transacType, transacAmount, 0);
+        TransactionTicket ticket = new TransactionTicket(getAcctNum(), date, transacType, acctType,transacAmount, 0);
         return new TransactionReceipt(ticket, transacType, transacAmount, status, acctBal, errorStr);
     }
 
     private void writeString(String str, int size) throws IOException {
-        for (int i = 0; i < size; i++){
-            if (str != null && i < str.length())
-                history.writeChar(str.charAt(i));
-            else
-                history.writeChar(0);
-        }
+        byte[] bytes = new byte[size];
+        byte[] strBytes = str.getBytes("UTF-8");
+        System.arraycopy(strBytes, 0, bytes, 0, Math.min(strBytes.length, size));
+        history.write(bytes);
     }
 
     private String readString(int size) throws IOException {
-        char[] chars = new char[size];
-        for (int i = 0; i < size; i++) {
-            chars[i] = history.readChar();
-        }
-        return new String(chars).replace('\0', ' ').trim();
+        byte[] bytes = new byte[size];
+        history.readFully(bytes);
+        return new String(bytes, "UTF-8").trim();
     }
 
     public void writeTransacHistData(TransactionReceipt history,int acctNum)throws IOException{
         this.history.seek(this.history.length());
+
+        Calendar tdy = Calendar.getInstance();
+        String strDate = String.format("%02d/%02d/%4d", tdy.get(Calendar.MONTH) + 1, tdy.get(Calendar.DAY_OF_MONTH), tdy.get(Calendar.YEAR));
 
         writeString(history.getTypeTransaction(), TYPE_LEN);
         this.history.writeDouble(history.getTransactionAmount());
         writeString(history.getTransactionStatus(), STATUS_LEN);
         this.history.writeDouble(history.getBalance());
         writeString(history.getReasonForFailure(), REASON_LEN);
-    }
+        writeString(strDate, 10);
+        }
 
     public String getHistoryData(TransactionReceipt history,int acctNum){
         Calendar tdy = Calendar.getInstance();

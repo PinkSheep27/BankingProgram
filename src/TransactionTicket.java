@@ -20,7 +20,7 @@ public class TransactionTicket extends genTransactionTicket{
             Index = 0;
             typeAccount = "";
         }
-        public TransactionTicket(int AN, String TD, String TT,String AT, double TA, int TOCD) {
+        public TransactionTicket(int AN, String TD, String TT, String AT, double TA, int TOCD) {
             setTypeAccount(AT);
             setAccountNumber(AN);
             setTransactionType(TT);
@@ -28,8 +28,24 @@ public class TransactionTicket extends genTransactionTicket{
             setTermOfCD(TOCD);
             transactionDate = Calendar.getInstance();
             transactionDate.clear();
-            String[] mdArray = TD.split("/");
-            transactionDate.set(Integer.parseInt(mdArray[2]), Integer.parseInt(mdArray[0]) - 1, Integer.parseInt(mdArray[1]));
+            if (TD != null && TD.contains("/")) {
+                String[] mdArray = TD.split("/");
+                // Make sure the split resulted in exactly 3 parts (month, day, year)
+                if (mdArray.length == 3) {
+                    try {
+                        // Safely parse the date parts
+                        int year = Integer.parseInt(mdArray[2]);
+                        int month = Integer.parseInt(mdArray[0]) - 1; // Calendar months are 0-based
+                        int day = Integer.parseInt(mdArray[1]);
+                        transactionDate.set(year, month, day);
+                    } catch (NumberFormatException e) {
+                        // If the parts of the date aren't numbers, this will catch the error.
+                        // We can log this for debugging but won't crash the program.
+                        System.err.println("Error parsing date components from: " + TD);
+                        transactionDate = Calendar.getInstance(); // Default to today's date
+                    }
+                }
+            }
             setTransactionDate(transactionDate);
         }
     public TransactionTicket(int AN, Calendar TD, String TT, double TA, int TOCD) {

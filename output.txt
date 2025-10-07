@@ -214,22 +214,20 @@ Last N.    First N.     SSN        Acct Num        Acct Type          Status    
 Sawyer     Tom        456789012         234567               CD            open           500.00
                          *****Account Transactions*****
 Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/07/2025     Withdraw   500.00     Failed  500.00      Error:1 Month(s) Isn't A Valid New Term.
-10/07/2025 thdraw    䃑㏀     0.00   iled  䁿䀀    0.00      7615.00 Is Over The Balance And Can't be Withdrawn.                           Wi
+10/07/2025   Withdraw     $  500.00 Failed   $   500.00      Error:1 Month(s) Isn't A Valid New Term.
 
 Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
 Doe        Jane       456789012         389765         Checking            open           888.56
                          *****Account Transactions*****
 Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/07/2025       Check.   500.21     Failed  888.56      Error: The Check is Post Date.
-10/07/2025  eck.      䁙     0.00   iled  䂋쑺 -41614939756262660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00      ror: The Check is Post Date.                                                  Ch
-10/07/2025    k.      䁙     0.00   ed  䂋쑺긔    0.00      r: The Check is Post Date.                                                  Chec
+10/07/2025   Check.       $  500.21 Failed   $   888.56      Error: The Check is Post Date.
+10/07/2025                $    0.00 10/07/   $     0.00      k.      @Y      Failed  @��z�G�Error: The Check is Post Date.
 
 Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
 Doe        Jane       456789012         123123          Savings            open          8765.43
                          *****Account Transactions*****
 Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/07/2025     Close A.     0.00       Done 8765.43
+10/07/2025   Close A.     $    0.00 Done     $  8765.43
 -----------------------------------------------------------------------------------------------------------------------------
 
 
