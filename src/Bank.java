@@ -1,17 +1,18 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.File;
+import java.util.Calendar;
 
 public class Bank {
-    final static private long DATA_SIZE = 100;
-    final static private int LAST_NAME_LEN = 10;
-    final static private int FIRST_NAME_LEN = 10;
-    final static private int SSN_LEN = 15;
-    final static private int ID_LEN = 9;
-    final static private int ACCOUNT_TYPE_LEN = 7;
-    final static private int STATUS_LEN = 15;
-    final static private int BALANCE_LEN = 15;
-    final static private int DATE_LEN = 10;
+     private static final int LAST_NAME_LEN = 15;
+    private static final int FIRST_NAME_LEN = 15;
+    private static final int SSN_LEN = 9;
+    private static final int ACCOUNT_TYPE_LEN = 10;
+    private static final int STATUS_LEN = 8;
+    public static final int DATA_SIZE = (LAST_NAME_LEN * 2) + (FIRST_NAME_LEN * 2)
+                                        + (SSN_LEN * 2) + 4
+                                        + (ACCOUNT_TYPE_LEN * 2) + (STATUS_LEN * 2)
+                                        + 8 + 8;
 
     private static final String FILE_NAME = "BankAccounts.dat";
     private final RandomAccessFile bankAccts;
@@ -39,8 +40,7 @@ public class Bank {
     public void appendNewAccount(Account acct){
         try{
             bankAccts.seek(bankAccts.length());
-            bankAccts.write(acct.toString().getBytes());
-
+            writeAccount(acct);
             numAccts++;
         }catch(IOException e){
             System.out.println("Error Writing Into File:" + e.getMessage());
@@ -77,6 +77,9 @@ public class Bank {
     }
 
     public Account getAcct(int n)throws IOException {
+        bankAccts.seek(n * DATA_SIZE);
+        return readAccount();
+        /* OLD CODE
         byte[] buffer = new byte[(int)DATA_SIZE];
 
         bankAccts.seek(n * DATA_SIZE);
@@ -115,6 +118,59 @@ public class Bank {
             return new SavingsAccount(depositor, Integer.parseInt(acctNum), acctType, status, Double.parseDouble(balance), "");
         else
             return new CheckingAccount(depositor, Integer.parseInt(acctNum), acctType, status, Double.parseDouble(balance), "");
+            */
+    }
+    private void writeAccount(Account acct) throws IOException {
+        writeString(acct.getDepositor().getName().getLast(), LAST_NAME_LEN);
+        writeString(acct.getDepositor().getName().getFirst(), FIRST_NAME_LEN);
+        writeString(acct.getDepositor().getSSN(), SSN_LEN);
+        bankAccts.writeInt(acct.getAcctNum());
+
+        writeString(acct.getAcctType(), ACCOUNT_TYPE_LEN);
+        writeString(acct.getStatus(), STATUS_LEN);
+        bankAccts.writeDouble(acct.getBalance());
+        
+        if (acct instanceof CDAccount)
+            bankAccts.writeLong(((CDAccount) acct).getMaturityDate().getTimeInMillis());
+        else 
+            bankAccts.writeLong(0);
+    }
+    private Account readAccount() throws IOException {
+        String lastName = readString(LAST_NAME_LEN);
+        String firstName = readString(FIRST_NAME_LEN);
+        String ssn = readString(SSN_LEN);
+        int acctNum = bankAccts.readInt();
+        String acctType = readString(ACCOUNT_TYPE_LEN).trim();
+        String status = readString(STATUS_LEN);
+        double balance = bankAccts.readDouble();
+        long maturityDateMillis = bankAccts.readLong();
+
+        Name name = new Name(lastName, firstName);
+        Depositor depositor = new Depositor(name, ssn);
+
+        if (acctType.equalsIgnoreCase("CD")) {
+            Calendar maturityDate = Calendar.getInstance();
+            maturityDate.setTimeInMillis(maturityDateMillis);
+            String mdString = String.format("%02d/%02d/%04d", maturityDate.get(Calendar.MONTH) + 1, maturityDate.get(Calendar.DAY_OF_MONTH), maturityDate.get(Calendar.YEAR));
+            return new CDAccount(depositor, acctNum, acctType, status, balance, mdString);
+        } else if (acctType.equalsIgnoreCase("Checking"))
+            return new CheckingAccount(depositor, acctNum, acctType, status, balance, "");
+        else
+            return new SavingsAccount(depositor, acctNum, acctType, status, balance, "");
+    }
+    private void writeString(String str, int size) throws IOException {
+        for (int i = 0; i < size; i++) {
+            if (i < str.length())
+                bankAccts.writeChar(str.charAt(i));
+            else
+                bankAccts.writeChar(0);
+        }
+    }
+    private String readString(int size) throws IOException {
+        char[] chars = new char[size];
+        for (int i = 0; i < size; i++)
+            chars[i] = bankAccts.readChar();
+        return new String(chars).replace('\0', ' ').trim();
     }
 
     private int findAcct(int requestedAccount) throws InvalidAccountException, IOException {

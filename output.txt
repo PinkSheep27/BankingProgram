@@ -1,0 +1,270 @@
+                         Accounts in the Database
+-----------------------------------------------------------------------------------------------------------------------------
+Name                     SSN           Account #      Account Type        Status          Balance          Maturity Date
+-----------------------------------------------------------------------------------------------------------------------------
+Doe        John       123445678         123456          Savings            open           200.55
+Beam       Jim        234556789         567890         Checking            open          1234.56
+Eyre       Jane       345667890         987654          Savings            open             2.33
+Sawyer     Tom        456789012         234567               CD            open           500.00            07/22/2022
+Finn       Huck       567889012         345678         Checking          closed           123.98
+Doe        John       123445678         222222               CD            open          5000.00            12/12/2023
+Doe        John       123445678         333333         Checking          closed           999.99
+Finn       Huck       567889012         654321          Savings            open             0.00
+Spratt     Jack       678990123         785609          Savings            open           333.33
+Doe        Jane       456789012         389765         Checking            open           888.56
+Doe        Jane       456789012         123123          Savings            open          8765.43
+Rudik      Dingle     001002003         666666               CD          closed           700.43            01/23/2023
+Gori       Steven     777777777         777777               CD            open           400.12            01/25/2023
+-----------------------------------------------------------------------------------------------------------------------------
+Total Amount in Savings Accounts: $9301.64
+Total Amount in Checking Accounts: $3247.09
+Total Amount in CD Accounts: $6600.55
+Total Amount in All Accounts: $19149.28
+
+Error: p is an invalid choice, please enter a value listed in the menu.
+
+Error: z is an invalid choice, please enter a value listed in the menu.
+
+Requested Withdrawal From Account #222222.
+Account Number:222222
+Account Type:CD
+Term Of CD:04/07/2026
+Maturity Date:6
+Pre Balance: $5000.00
+Withdrawal Amount: $500.00
+Post Balance: $4500.00
+
+Requested Withdrawal From Account #234567.
+Account Number: 234567
+Error:1 Month(s) Isn't A Valid New Term.
+
+Requested Withdrawal From Account #234567.
+$17615.00 Is Over The Balance And Can't be Withdrawn.
+
+Requested Withdrawal From Account #234567.
+Account Number:234567
+Account Type:CD
+Term Of CD:04/07/2026
+Maturity Date:6
+Pre Balance: $500.00
+Withdrawal Amount: $300.00
+Post Balance: $200.00
+
+Requested Withdrawal From Account #321705.
+Error: Account #321705 DNE.
+
+Requested Deposit From Account #222222.
+Account Number:222222
+Account Type:CD
+Term Of CD:04/07/2026
+Maturity Date:6
+Pre Balance: $5000.00
+Deposit Amount: $100.00
+Post Balance: $5100.00
+
+Requested Deposit From Account #777777.
+Account Number: 777777
+Error:1 Month(s) Isn't A Valid New Term.
+
+Requested Deposit From Account #777777.
+Account Number: 777777
+$-100.00 Is An Invalid Deposit Amount
+
+Requested Deposit From Account #777777.
+Account Number:777777
+Account Type:CD
+Term Of CD:04/07/2026
+Maturity Date:6
+Pre Balance: $400.12
+Deposit Amount: $100.00
+Post Balance: $500.12
+
+Requested Deposit From Account #123457.
+Error: Account #123457 DNE.
+
+Requested To Create a New Account
+Error: Account #123456 Already Exists.
+
+Requested To Create a New Account
+Error: Account #55555 is Invalid Because It Isn't 6 digits long.
+
+Requested To Create a New Account
+Account Number:111111
+Account Type:CD
+Maturity Date:10/07/2025
+Balance: $100.00
+
+Requested To Create a New Account
+Error: -100.00 Is An Invalid Amount.
+
+Requested To Create a New Account
+Error: null Is An Invalid Choice
+
+Requested To Create a New Account
+Error:88888888 isn't a valid SSN Due to it is Not Being 9 Digits Long.
+
+Requested Withdrawal From Account #111111.
+Account Number:111111
+Account Type:CD
+Term Of CD:04/07/2026
+Maturity Date:6
+Pre Balance: $100.00
+Withdrawal Amount: $100.00
+Post Balance: $0.00
+
+Requested Balance of Account #222222.
+Account Number:222222
+Account Type:CD
+Maturity Date:12/12/2023
+Balance: $5000.00
+
+Requested Balance of Account #999999.
+Error: Account #999999 DNE.
+
+Requested An Account Deletion.
+Account Type: Savings
+Account #654321 has Been Deleted.
+
+Requested An Account Deletion.
+Error: Account #123456 has $200.55 Therefore we Can't Delete the Account.
+
+Requested Withdrawal From Account #123456.
+Account Type:Savings
+Account Number:123456
+Pre Balance: $200.55
+Withdrawal Amount: $200.55
+Post Balance: $0.00
+
+Requested Balance of Account #123456.
+Account Type:Savings
+Account Number:123456
+Balance: $200.55
+
+Requested An Account Deletion.
+Error: Account #123456 has $200.55 Therefore we Can't Delete the Account.
+
+Requested Account Info
+Error: No Account Exists with the following SSN:999999999.
+
+
+Requested Account Info
+Error:999999 isn't a valid SSN Due to it Not Being 9 Digits Long.
+
+
+Requested Account Info
+Error: No Account Exists with the following SSN:121212122.
+
+
+Requested Account Info
+
+SSN:123445678
+-----------------------------------------------------------------------------------------------------------------------------
+Name                 SSN           Account #      Account Type        Status              Balance          Maturity Date
+-----------------------------------------------------------------------------------------------------------------------------
+Doe        John       123445678         123456          Savings            open           200.55
+Doe        John       123445678         222222               CD            open          5000.00
+Doe        John       123445678         333333         Checking          closed           999.99
+-----------------------------------------------------------------------------------------------------------------------------
+
+3 Accounts Were Found.
+
+
+Requested to Clear a Check.
+Error: The Date of the Check is Old.
+
+Requested to Clear a Check.
+Error: The Date of the Check is Old.
+
+Requested to Clear a Check.
+Error: The Date of the Check is Old.
+
+Requested to Clear a Check.
+Error: The Date of the Check is Old.
+
+Requested to Clear a Check.
+Error: Account #101010 DNE.
+
+Requested to Clear a Check.
+Can't Clear Check of $100.00 Due to Account #333333 Being Closed.
+
+Requested to Close an Account.
+Account #123123 Successfully Closed.
+
+Requested to Close an Account.
+Can't Close Account #666666 it's Already Closed.
+
+Requested to Close an Account.
+Error: Account #999999 DNE.
+
+Requested to Reopen an Account.
+Can't Reopen Account #123123 it's Already Open.
+
+Requested to Reopen an Account.
+Can't Reopen Account #123456 it's Already Open.
+
+Requested to Reopen an Account.
+Error: Account #999999 DNE.
+
+
+Requested Account Info with Transaction History
+SSN: 456789012
+-----------------------------------------------------------------------------------------------------------------------------
+
+Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
+Sawyer     Tom        456789012         234567               CD            open           500.00
+                         *****Account Transactions*****
+Date        Transaction   Amount     Status  Balance     Reason For Failure
+10/07/2025     Withdraw   500.00     Failed  500.00      Error:1 Month(s) Isn't A Valid New Term.
+10/07/2025 thdraw    䃑㏀     0.00   iled  䁿䀀    0.00      7615.00 Is Over The Balance And Can't be Withdrawn.                           Wi
+
+Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
+Doe        Jane       456789012         389765         Checking            open           888.56
+                         *****Account Transactions*****
+Date        Transaction   Amount     Status  Balance     Reason For Failure
+10/07/2025       Check.   500.21     Failed  888.56      Error: The Date of the Check is Old.
+10/07/2025  eck.      䁙     0.00   iled  䂋쑺 -41614939756262660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00      ror: The Date of the Check is Old.                                            Ch
+10/07/2025    k.      䁙     0.00   ed  䂋쑺긔    0.00      r: The Date of the Check is Old.                                            Chec
+
+Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
+Doe        Jane       456789012         123123          Savings            open          8765.43
+                         *****Account Transactions*****
+Date        Transaction   Amount     Status  Balance     Reason For Failure
+10/07/2025     Close A.     0.00       Done 8765.43
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+3 accounts were found.
+
+
+Requested Account Info with Transaction History
+Error: No Account Exists with the following SSN:555555555.
+
+
+
+Requested Account Info with Transaction History
+Error:999999 isn't a valid SSN Due to it Not Being 9 Digits Long.
+
+
+                         Accounts in the Database
+-----------------------------------------------------------------------------------------------------------------------------
+Name                     SSN           Account #      Account Type        Status          Balance          Maturity Date
+-----------------------------------------------------------------------------------------------------------------------------
+Doe        John       123445678         123456          Savings            open           200.55
+Beam       Jim        234556789         567890         Checking            open          1234.56
+Eyre       Jane       345667890         987654          Savings            open             2.33
+Sawyer     Tom        456789012         234567               CD            open           500.00            07/22/2022
+Finn       Huck       567889012         345678         Checking          closed           123.98
+Doe        John       123445678         222222               CD            open          5000.00            12/12/2023
+Doe        John       123445678         333333         Checking          closed           999.99
+Finn       Huck       567889012         654321          Savings            open             0.00
+Spratt     Jack       678990123         785609          Savings            open           333.33
+Doe        Jane       456789012         389765         Checking            open           888.56
+Doe        Jane       456789012         123123          Savings            open          8765.43
+Rudik      Dingle     001002003         666666               CD          closed           700.43            01/23/2023
+Gori       Steven     777777777         777777               CD            open           400.12            01/25/2023
+-----------------------------------------------------------------------------------------------------------------------------
+Total Amount in Savings Accounts: $9301.64
+Total Amount in Checking Accounts: $3247.09
+Total Amount in CD Accounts: $2200.55
+Total Amount in All Accounts: $14749.28
+

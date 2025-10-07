@@ -11,7 +11,10 @@ public class Account extends genAccount{
     private double balance;
     private String date;
     private RandomAccessFile history;
-    final private long RECEIPT_SIZE = 230;
+    final static private int TYPE_LEN = 12;
+    final static private int STATUS_LEN = 8;
+    final static private int REASON_LEN = 80;
+    final private long RECEIPT_SIZE = (TYPE_LEN * 2) + 8 + (STATUS_LEN * 2) + 12 + (REASON_LEN * 2);
 
     public Account () throws IOException {
         depositor = new Depositor();
@@ -81,6 +84,20 @@ public class Account extends genAccount{
     public Calendar getMaturityDate(){return null;}
 
     public TransactionReceipt getHistory(int n) throws IOException {
+        history.seek(n * RECEIPT_SIZE);
+
+        // Read the data in the same order it was written
+        String transacType = readString(TYPE_LEN);
+        double transacAmount = history.readDouble();
+        String status = readString(STATUS_LEN);
+        double acctBal = history.readDouble();
+        String errorStr = readString(REASON_LEN);
+
+        // Reconstruct and return the TransactionReceipt
+        TransactionTicket ticket = new TransactionTicket(getAcctNum(), Calendar.getInstance(), transacType, transacAmount, 0);
+        return new TransactionReceipt(ticket, transacType, transacAmount, status, acctBal, errorStr);
+
+        /* OLD CODE
         String dataStr;
         String holder = "";
         char[] array = new char[11];
@@ -116,20 +133,41 @@ public class Account extends genAccount{
         TransactionTicket ticket = new TransactionTicket(getAcctNum(),date,transacType,getAcctType(),Double.parseDouble(transacAmount),0);
 
         return new TransactionReceipt(ticket,transacType,Double.parseDouble(transacAmount),status,Double.parseDouble(acctBal),errorStr);
+        */
+    }
+
+    private void writeString(String str, int size) throws IOException {
+        for (int i = 0; i < size; i++) {
+            if (str != null && i < str.length()) {
+                history.writeChar(str.charAt(i));
+            } else {
+                history.writeChar(0);
+            }
+        }
+    }
+
+    private String readString(int size) throws IOException {
+        char[] chars = new char[size];
+        for (int i = 0; i < size; i++) {
+            chars[i] = history.readChar();
+        }
+        return new String(chars).replace('\0', ' ').trim();
     }
 
     public void writeTransacHistData(TransactionReceipt history,int acctNum)throws IOException{
-        String historyInfo = getHistoryData(history,acctNum);
-
         this.history.seek(this.history.length());
-        this.history.writeChars(historyInfo);
+
+        writeString(history.getTypeTransaction(), TYPE_LEN);
+        this.history.writeDouble(history.getTransactionAmount());
+        writeString(history.getTransactionStatus(), STATUS_LEN);
+        this.history.writeDouble(history.getBalance());
+        writeString(history.getReasonForFailure(), REASON_LEN);
     }
 
     public String getHistoryData(TransactionReceipt history,int acctNum){
         Calendar tdy = Calendar.getInstance();
         String strDate = String.format("%02d/%02d/%4d", tdy.get(Calendar.MONTH) + 1, tdy.get(Calendar.DAY_OF_MONTH), tdy.get(Calendar.YEAR));
-        try {
-            RandomAccessFile receipt = new RandomAccessFile("Receipt" + acctNum + ".dat", "rw");
+        try (RandomAccessFile receipt = new RandomAccessFile("Receipt" + acctNum + ".dat", "rw")){
             String str = String.format("%-10s %-10s %-10.2f %-10s %-10.2f %-60s", strDate, history.getTypeTransaction(), history.getTransactionAmount(), history.getTransactionStatus(), history.getBalance(), history.getReasonForFailure());
 
             receipt.close();
@@ -141,7 +179,7 @@ public class Account extends genAccount{
     }
 
     public long getHistorySize() throws IOException {
-        return history.length()/RECEIPT_SIZE;
+        return history.length() / RECEIPT_SIZE;
     }
     public TransactionReceipt makeWithdrawal2(Bank bank, TransactionTicket ticket) throws IOException {
         TransactionReceipt receipt = null;
