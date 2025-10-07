@@ -170,16 +170,16 @@ Doe        John       123445678         333333         Checking          closed 
 
 
 Requested to Clear a Check.
-Error: The Date of the Check is Old.
+Error: The Check is Post Date.
 
 Requested to Clear a Check.
-Error: The Date of the Check is Old.
+Error: The Check is Post Date.
 
 Requested to Clear a Check.
-Error: The Date of the Check is Old.
+Error: The Check is Post Date.
 
 Requested to Clear a Check.
-Error: The Date of the Check is Old.
+Error: The Check is Post Date.
 
 Requested to Clear a Check.
 Error: Account #101010 DNE.
@@ -221,9 +221,9 @@ Last N.    First N.     SSN        Acct Num        Acct Type          Status    
 Doe        Jane       456789012         389765         Checking            open           888.56
                          *****Account Transactions*****
 Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/07/2025       Check.   500.21     Failed  888.56      Error: The Date of the Check is Old.
-10/07/2025  eck.      䁙     0.00   iled  䂋쑺 -41614939756262660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00      ror: The Date of the Check is Old.                                            Ch
-10/07/2025    k.      䁙     0.00   ed  䂋쑺긔    0.00      r: The Date of the Check is Old.                                            Chec
+10/07/2025       Check.   500.21     Failed  888.56      Error: The Check is Post Date.
+10/07/2025  eck.      䁙     0.00   iled  䂋쑺 -41614939756262660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00      ror: The Check is Post Date.                                                  Ch
+10/07/2025    k.      䁙     0.00   ed  䂋쑺긔    0.00      r: The Check is Post Date.                                                  Chec
 
 Last N.    First N.     SSN        Acct Num        Acct Type          Status             Balance          Maturity Date
 Doe        Jane       456789012         123123          Savings            open          8765.43

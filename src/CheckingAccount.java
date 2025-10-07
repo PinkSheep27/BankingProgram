@@ -99,9 +99,9 @@ public class CheckingAccount extends Account{
 try{
         if (getStatus().equals("open")) {
             if(!(check.getDateOfCheck().after(today))){
-                throw new CheckTooOldException();
-            }else if(!(check.getDateOfCheck().before(today1))){
                 throw new PostDatedCheckException();
+            }else if(!(check.getDateOfCheck().before(today1))){
+                throw new CheckTooOldException();
             }
             if (super.getBalance() < check.getCheckAmount()) {
                 normBal = super.getBalance();

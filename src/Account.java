@@ -31,7 +31,6 @@ public class Account extends genAccount{
         setStatus(s);
         setDate(date);
         setBal(balance);
-        history = new RandomAccessFile("Receipt" + AN + ".dat","rw");
     }
     public Account(Account account)throws IOException{
         depositor = new Depositor(account.depositor);
@@ -81,68 +80,32 @@ public class Account extends genAccount{
         return balance;
     }
     public String getDate(){ return date;}
+
     public Calendar getMaturityDate(){return null;}
+    public void openHistoryFile() throws IOException{
+        history = new RandomAccessFile("Receipt" + acctNum + ".dat", "rw");
+    }
+
 
     public TransactionReceipt getHistory(int n) throws IOException {
         history.seek(n * RECEIPT_SIZE);
 
-        // Read the data in the same order it was written
         String transacType = readString(TYPE_LEN);
         double transacAmount = history.readDouble();
         String status = readString(STATUS_LEN);
         double acctBal = history.readDouble();
         String errorStr = readString(REASON_LEN);
 
-        // Reconstruct and return the TransactionReceipt
         TransactionTicket ticket = new TransactionTicket(getAcctNum(), Calendar.getInstance(), transacType, transacAmount, 0);
         return new TransactionReceipt(ticket, transacType, transacAmount, status, acctBal, errorStr);
-
-        /* OLD CODE
-        String dataStr;
-        String holder = "";
-        char[] array = new char[11];
-        char[] errorArray = new char[60];
-
-        long position = RECEIPT_SIZE * n;
-        history.seek(position);
-        for(int i = 0; i < 5; i++) {
-            history.seek(position);
-            for(int k = 0; k < 11; k++) {
-                array[k] = history.readChar();
-            }
-            dataStr = new String(array);
-            dataStr = String.format("%-12s", dataStr.trim());
-            holder += dataStr;
-            position += 22;
-        }for(int i = 0; i < 60; i++) {
-            errorArray[i] = history.readChar();
-        }
-        dataStr = new String(errorArray);
-        dataStr = String.format("%-60s", dataStr.trim());
-        holder += dataStr;
-
-        System.out.println(holder);
-
-        String date = holder.substring(0,11).trim();
-        String transacType = holder.substring(10,21).trim();
-        String transacAmount = holder.substring(21,30).trim();
-        String status = holder.substring(30,45).trim();
-        String acctBal = holder.substring(45,55).trim();
-        String errorStr = holder.substring(55).trim();
-
-        TransactionTicket ticket = new TransactionTicket(getAcctNum(),date,transacType,getAcctType(),Double.parseDouble(transacAmount),0);
-
-        return new TransactionReceipt(ticket,transacType,Double.parseDouble(transacAmount),status,Double.parseDouble(acctBal),errorStr);
-        */
     }
 
     private void writeString(String str, int size) throws IOException {
-        for (int i = 0; i < size; i++) {
-            if (str != null && i < str.length()) {
+        for (int i = 0; i < size; i++){
+            if (str != null && i < str.length())
                 history.writeChar(str.charAt(i));
-            } else {
+            else
                 history.writeChar(0);
-            }
         }
     }
 

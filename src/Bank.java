@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Calendar;
 
 public class Bank {
-     private static final int LAST_NAME_LEN = 15;
+    private static final int LAST_NAME_LEN = 15;
     private static final int FIRST_NAME_LEN = 15;
     private static final int SSN_LEN = 9;
     private static final int ACCOUNT_TYPE_LEN = 10;
@@ -79,47 +79,8 @@ public class Bank {
     public Account getAcct(int n)throws IOException {
         bankAccts.seek(n * DATA_SIZE);
         return readAccount();
-        /* OLD CODE
-        byte[] buffer = new byte[(int)DATA_SIZE];
-
-        bankAccts.seek(n * DATA_SIZE);
-        bankAccts.readFully(buffer);
-
-        String dataStr = new String(buffer);
-
-        int start = 0,end = LAST_NAME_LEN;
-        String lastName = dataStr.substring(start, end).trim();
-        start = end; end += FIRST_NAME_LEN;
-        String firstName = dataStr.substring(start, end).trim();
-
-        Name name = new Name(lastName, firstName);
-
-        start = end; end += SSN_LEN;
-        String SSN = dataStr.substring(start,end).trim();
-
-        Depositor depositor = new Depositor(name, SSN);
-
-        start = end; end += ID_LEN;
-        String acctNum = dataStr.substring(start,end).trim();
-        start = end; end += ACCOUNT_TYPE_LEN;
-        String acctType = dataStr.substring(start,end).trim();
-        start = end; end += STATUS_LEN;
-        String status = dataStr.substring(start,end).trim();
-        start = end; end += BALANCE_LEN;
-        String balance = dataStr.substring(start,end).trim();
-
-        if (acctType.equals("CD"))
-        {
-            start = end; end += DATE_LEN;
-            String maturityDate = dataStr.substring(start,end).trim();
-            return new CDAccount(depositor, Integer.parseInt(acctNum), acctType, status, Double.parseDouble(balance), maturityDate);
-        }
-        else if (acctType.equals("Savings"))
-            return new SavingsAccount(depositor, Integer.parseInt(acctNum), acctType, status, Double.parseDouble(balance), "");
-        else
-            return new CheckingAccount(depositor, Integer.parseInt(acctNum), acctType, status, Double.parseDouble(balance), "");
-            */
     }
+
     private void writeAccount(Account acct) throws IOException {
         writeString(acct.getDepositor().getName().getLast(), LAST_NAME_LEN);
         writeString(acct.getDepositor().getName().getFirst(), FIRST_NAME_LEN);
@@ -135,6 +96,7 @@ public class Bank {
         else 
             bankAccts.writeLong(0);
     }
+
     private Account readAccount() throws IOException {
         String lastName = readString(LAST_NAME_LEN);
         String firstName = readString(FIRST_NAME_LEN);
@@ -147,16 +109,20 @@ public class Bank {
 
         Name name = new Name(lastName, firstName);
         Depositor depositor = new Depositor(name, ssn);
+        Account account;
 
         if (acctType.equalsIgnoreCase("CD")) {
             Calendar maturityDate = Calendar.getInstance();
             maturityDate.setTimeInMillis(maturityDateMillis);
             String mdString = String.format("%02d/%02d/%04d", maturityDate.get(Calendar.MONTH) + 1, maturityDate.get(Calendar.DAY_OF_MONTH), maturityDate.get(Calendar.YEAR));
-            return new CDAccount(depositor, acctNum, acctType, status, balance, mdString);
+            account = new CDAccount(depositor, acctNum, acctType, status, balance, mdString);
         } else if (acctType.equalsIgnoreCase("Checking"))
-            return new CheckingAccount(depositor, acctNum, acctType, status, balance, "");
+            account = new CheckingAccount(depositor, acctNum, acctType, status, balance, "");
         else
-            return new SavingsAccount(depositor, acctNum, acctType, status, balance, "");
+            account = new SavingsAccount(depositor, acctNum, acctType, status, balance, "");
+        
+        account.openHistoryFile();
+        return account;
     }
     private void writeString(String str, int size) throws IOException {
         for (int i = 0; i < size; i++) {
@@ -270,13 +236,14 @@ public class Bank {
                 return new TransactionReceipt(ticket, false, "Error: " + ticket.getTypeAccount() + " Is An Invalid Choice", "", "", 0.00, 0.00);
             } else if (ticket.getTransactionAmount() < 0) {
                 return new TransactionReceipt(ticket, false, String.format("Error: %.2f Is An Invalid Amount.", ticket.getTransactionAmount()), "", "", 0.00, 0.00);
-            } else if (ticket.getAccountNumber() < 100000 || ticket.getAccountNumber() > 999999)
+            } else if (String.valueOf(ticket.getAccountNumber()).length() != 6)
                 return new TransactionReceipt(ticket, false, "Error: Account #" + ticket.getAccountNumber() + " is Invalid Because It Isn't 6 digits long.", "", "", 0.00, 0.00);
         }
         String acctType = account.getAcctType();
         if (acctType.equals("Checking")) {
             CA = new CheckingAccount(account.getDepositor(), account.getAcctNum(), account.getAcctType(), account.getStatus(), account.getBalance(), "");
 
+            CA.openHistoryFile();
             appendNewAccount(CA);
 
             history = new TransactionReceipt(ticket, "New Acc.", ticket.getTransactionAmount(), "Done", CA.getBalance(), "");
@@ -288,6 +255,7 @@ public class Bank {
         } else if (acctType.equals("CD")) {
             CDA = new CDAccount(account.getDepositor(), account.getAcctNum(), account.getAcctType(), account.getStatus(), account.getBalance(), account.getDate());
 
+            CDA.openHistoryFile();
             appendNewAccount(CDA);
 
             history = new TransactionReceipt(ticket, "New Acc.", ticket.getTransactionAmount(), "Done", CDA.getBalance(), "");
@@ -300,6 +268,7 @@ public class Bank {
         } else {
             SA = new SavingsAccount(account.getDepositor(), account.getAcctNum(), account.getAcctType(), account.getStatus(), account.getBalance(), "");
 
+            SA.openHistoryFile();
             appendNewAccount(SA);
 
             history = new TransactionReceipt(ticket, "New Acc.", ticket.getTransactionAmount(), "Done", SA.getBalance(), "");

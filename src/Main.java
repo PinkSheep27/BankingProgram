@@ -616,6 +616,7 @@ Reads all the accounts into the accounts array
                     else
                         AC = new CheckingAccount(myDepositor, Integer.parseInt(tokens[3]), tokens[4], tokens[5], Double.parseDouble(tokens[6]), "");
 
+                    AC.openHistoryFile();
                     bank.appendNewAccount(AC);
                 }
             } catch (InputMismatchException e) {
