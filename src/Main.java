@@ -4,10 +4,16 @@
 //Reminder: Fix RandomAccessFile output
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        checkForFiles();
 
         Bank bank = new Bank();
 
@@ -71,6 +77,8 @@ public class Main {
             pw.close();  //closes the output file
             UI.close(); //closes the Scanner
 
+            checkForFiles();
+
             System.out.println();
             System.out.println("The Program is Closing");
 
@@ -95,6 +103,7 @@ public class Main {
         TransactionReceipt history;
 
         Account myAccount;
+        Account copyAcct;
 
         pw.println();
         pw.println("Requested Account Info with Transaction History");
@@ -118,11 +127,14 @@ public class Main {
                     if (bank.getAcct(i).getDepositor().getSSN().equals(requestedSSN)) {
                         pw.println();
 
-                        pw.printf("%s %11s %7s %15s %16s %15s %19s %22s", "Last N.", "First N.", "SSN", "Acct Num", "Acct Type", "Status", "Balance", "Maturity Date");
+                        pw.printf("%s %11s %5s %15s %13s %10s %10s %22s", "Last N.", "First N.", "SSN", "Acct #", "Acct Type", "Status", "Balance", "Maturity Date");
                         pw.println();
 
                         myAccount = bank.getAcct(i);
-                        Account copyAcct = new Account(myAccount);
+                        if (myAccount.getAcctType().equals("CD"))
+                            copyAcct = new CDAccount(myAccount.getDepositor(), myAccount.getAcctNum(), myAccount.getAcctType(), myAccount.getStatus(), myAccount.getBalance(), myAccount.getDate());
+                        else
+                            copyAcct = new Account(myAccount);
                         pw.print(copyAcct);
 
                         pw.println();
@@ -512,6 +524,7 @@ Prints out the accounts that have the same SSN
         int count = 0;
 
         Account myAccount;
+        Account copyAcct;
 
         pw.println();
         pw.println("SSN:" + requestedSSN);
@@ -524,8 +537,10 @@ Prints out the accounts that have the same SSN
 
                 myAccount = bank.getAcct(i);
 
-                Account copyAcct = new Account(myAccount);
-
+                if (myAccount.getAcctType().equals("CD"))
+                    copyAcct = new CDAccount(myAccount.getDepositor(), myAccount.getAcctNum(), myAccount.getAcctType(), myAccount.getStatus(), myAccount.getBalance(), myAccount.getDate());
+                else
+                    copyAcct = new Account(myAccount);
                 pw.print(copyAcct);
 
                 pw.println();
@@ -628,6 +643,45 @@ Reads all the accounts into the accounts array
     }
 
     /*
+     Input:
+        Nothing
+    Process:
+        Check for any files called BankAccounts.dat or Files starting with "Receipt"
+        Effectively want to get rid of these files upon running the program for easier
+        debugging.
+    Output:
+        No output just deleting the files not needed at the running of the program.
+     */
+    public static void checkForFiles(){
+        Path currentDir = Paths.get(".");
+
+        try {
+            Path bankAccountFile = currentDir.resolve("BankAccounts.dat");
+            boolean deleted = Files.deleteIfExists(bankAccountFile);
+            if (deleted) {
+                System.out.println("Deleted old file: BankAccounts.dat");
+            }
+        } catch (IOException e) {
+            System.out.println("Error deleting BankAccounts.dat: " + e.getMessage());
+        }
+
+        try (Stream<Path> files = Files.list(currentDir)) {
+            files.filter(path -> Files.isRegularFile(path) && 
+                                path.getFileName().toString().startsWith("Receipt"))
+                .forEach(receiptFile -> {
+                    try {
+                        Files.delete(receiptFile);
+                        System.out.println("Deleted old receipt: " + receiptFile.getFileName());
+                    } catch (IOException e) {
+                        System.out.println("Could not delete " + receiptFile.getFileName() + ": " + e.getMessage());
+                    }
+                });
+        } catch (IOException e) {
+            System.out.println("Error reading directory contents: " + e.getMessage());
+        }
+    }
+
+    /*
     Input:
 Nothing
     Process:
@@ -654,10 +708,19 @@ prints out the menu
         System.out.println("Please enter an Action: ");
     }
 
+    /*
+    Input:
+        Enter Key
+    Process:
+        Wait for user input, effectively stopping the program 
+        until the user wants to continue
+    Output:
+        A prompt asking the user to press the Enter Key
+    */
     public static void pause(Scanner output) {
         String tempstr;
         System.out.println();
-        System.out.print("press ENTER to continue");
+        System.out.print("Press ENTER to Continue");
         tempstr = output.nextLine();
         tempstr = output.nextLine();
     }

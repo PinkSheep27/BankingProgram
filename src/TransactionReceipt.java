@@ -169,15 +169,11 @@ public class TransactionReceipt extends genTransactionReceipt{
         }
     }
 
-    // **NEW/MODIFIED PART**
     // This part handles the single-line output for the transaction history table.
     else {
-        Calendar today = Calendar.getInstance();
-        String todayS = String.format("%02d/%02d/%04d", today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.YEAR));
-
         // Using a more structured format for history to avoid alignment issues
-        return String.format("%-12s %-12s $%8.2f %-8s $%9.2f      %-40s",
-                todayS,
+        return String.format("%-12s %-12s %9.2f %-11s %9.2f %-40s",
+                transactionTicket.getDate(),
                 typeTransaction,
                 transactionAmount,
                 transactionStatus,

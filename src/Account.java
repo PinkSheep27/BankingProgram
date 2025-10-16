@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Calendar;
@@ -14,7 +13,7 @@ public class Account extends genAccount{
     final static private int TYPE_LEN = 12;
     final static private int STATUS_LEN = 8;
     final static private int REASON_LEN = 80;
-    final private long RECEIPT_SIZE = (TYPE_LEN * 2) + 8 + (STATUS_LEN * 2) + 12 + (REASON_LEN * 2);
+    final private long RECEIPT_SIZE = TYPE_LEN + 8 + STATUS_LEN + 8 + REASON_LEN + 10;
 
     public Account () throws IOException {
         depositor = new Depositor();
@@ -44,7 +43,7 @@ public class Account extends genAccount{
     }
 
     public String toString() {
-        return String.format("%s %s %8s %16s %15s         %8.2f", depositor.getName().toString(), depositor.toString(), acctNum, acctType, status, balance);
+        return String.format("%s %s %s %6s %15s %11.2f", depositor.getName().toString(), depositor.toString(), acctNum, acctType, status, balance);
     }
 
     protected void setDepositor(Depositor d){
@@ -168,7 +167,6 @@ public class Account extends genAccount{
         Account CA;
         String success;
 
-        System.out.println("yooo");
         if (getStatus().equals("closed")) {
             status = "open";
 

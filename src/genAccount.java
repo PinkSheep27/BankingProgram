@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -10,7 +9,6 @@ public abstract class genAccount {
     private double balance;
     private String date;
     private RandomAccessFile history;
-    final private long RECEIPT_SIZE = 292;
 
     public genAccount(){
         depositor = new Depositor();

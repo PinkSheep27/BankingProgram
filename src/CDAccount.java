@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-public class CDAccount extends SavingsAccount{
+public class CDAccount extends Account{
         private Calendar maturityDate;
 
         public CDAccount()throws IOException{
@@ -139,7 +139,7 @@ try{
 }
         public String toString(){
                 String date = String.format("%02d/%02d/%4d", maturityDate.get(Calendar.MONTH) + 1, maturityDate.get(Calendar.DAY_OF_MONTH), maturityDate.get(Calendar.YEAR));
-                return String.format("%s%22s", super.toString(), date);
+                return String.format("%s%21s", super.toString(), date);
         }
 
         public Calendar getMaturityDate() {
