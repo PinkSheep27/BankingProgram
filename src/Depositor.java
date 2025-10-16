@@ -18,7 +18,7 @@ public class Depositor extends genDepositor{
     }
 
     public String toString(){
-        return String.format("%-12s",SSN);
+        return String.format("%-13s",SSN);
     }
     public boolean equals(Depositor myDepositor){
         if(SSN.equals(myDepositor.getSSN()) && name.equals(myDepositor.getName()))

@@ -77,8 +77,6 @@ public class Main {
             pw.close();  //closes the output file
             UI.close(); //closes the Scanner
 
-            checkForFiles();
-
             System.out.println();
             System.out.println("The Program is Closing");
 
@@ -139,7 +137,7 @@ public class Main {
 
                         pw.println();
                         pw.println("                         *****Account Transactions*****");
-                        pw.printf("%-12s%s%9s%11s%9s%23s", "Date", "Transaction", "Amount", "Status", "Balance", "Reason For Failure");
+                        pw.printf("%-12s%s%9s%15s%12s%26s", "Date", "Transaction", "Amount", "Status", "Balance", "Reason For Failure");
                         pw.println();
                         for (int x = 0; x < myAccount.getHistorySize(); x++) {
                             history = myAccount.getHistory(x);

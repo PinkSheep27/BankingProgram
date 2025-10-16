@@ -16,7 +16,7 @@ public class Name extends genName{
         first = nameCopy.first;
     }
     public String toString(){
-        return String.format("%-10s %-10s",first,last);
+        return String.format("%-10s %-11s",first,last);
     }
     public boolean equals(Name myName){
         if(last.equals(myName.last) && first.equals(myName.first))

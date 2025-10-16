@@ -43,7 +43,7 @@ public class Account extends genAccount{
     }
 
     public String toString() {
-        return String.format("%s %s %s %6s %15s %11.2f", depositor.getName().toString(), depositor.toString(), acctNum, acctType, status, balance);
+        return String.format("%s%s%-11d%-14s%-10s%-17.2f", depositor.getName().toString(), depositor.toString(), acctNum, acctType, status, balance);
     }
 
     protected void setDepositor(Depositor d){

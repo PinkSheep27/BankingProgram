@@ -2,19 +2,19 @@
 -----------------------------------------------------------------------------------------------------------------------------
 Name                     SSN           Account #      Account Type        Status          Balance          Maturity Date
 -----------------------------------------------------------------------------------------------------------------------------
-Doe        John       123445678    123456 Savings            open      200.55
-Beam       Jim        234556789    567890 Checking            open     1234.56
-Eyre       Jane       345667890    987654 Savings            open        2.33
-Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022
-Finn       Huck       567889012    345678 Checking          closed      123.98
-Doe        John       123445678    222222     CD            open     5000.00           12/12/2023
-Doe        John       123445678    333333 Checking          closed      999.99
-Finn       Huck       567889012    654321 Savings            open        0.00
-Spratt     Jack       678990123    785609 Savings            open      333.33
-Doe        Jane       456789012    389765 Checking            open      888.56
-Doe        Jane       456789012    123123 Savings            open     8765.43
-Rudik      Dingle     001002003    666666     CD          closed      700.43           01/23/2023
-Gori       Steven     777777777    777777     CD            open      400.12           01/25/2023
+Doe        John       123445678    123456     Savings       open      200.55           
+Beam       Jim        234556789    567890     Checking      open      1234.56          
+Eyre       Jane       345667890    987654     Savings       open      2.33             
+Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022 
+Finn       Huck       567889012    345678     Checking      closed    123.98           
+Doe        John       123445678    222222     CD            open      5000.00          12/12/2023 
+Doe        John       123445678    333333     Checking      closed    999.99           
+Finn       Huck       567889012    654321     Savings       open      0.00             
+Spratt     Jack       678990123    785609     Savings       open      333.33           
+Doe        Jane       456789012    389765     Checking      open      888.56           
+Doe        Jane       456789012    123123     Savings       open      8765.43          
+Rudik      Dingle     001002003    666666     CD            closed    700.43           01/23/2023 
+Gori       Steven     777777777    777777     CD            open      400.12           01/25/2023 
 -----------------------------------------------------------------------------------------------------------------------------
 Total Amount in Savings Accounts: $9301.64
 Total Amount in Checking Accounts: $3247.09
@@ -161,9 +161,9 @@ SSN:123445678
 -----------------------------------------------------------------------------------------------------------------------------
 Name                 SSN           Account #      Account Type        Status              Balance          Maturity Date
 -----------------------------------------------------------------------------------------------------------------------------
-Doe        John       123445678    123456 Savings            open      200.55
-Doe        John       123445678    222222     CD            open     5000.00           12/12/2023
-Doe        John       123445678    333333 Checking          closed      999.99
+Doe        John       123445678    123456     Savings       open      200.55           
+Doe        John       123445678    222222     CD            open      5000.00          12/12/2023 
+Doe        John       123445678    333333     Checking      closed    999.99           
 -----------------------------------------------------------------------------------------------------------------------------
 
 3 Accounts Were Found.
@@ -211,28 +211,28 @@ SSN: 456789012
 -----------------------------------------------------------------------------------------------------------------------------
 
 Last N.    First N.   SSN          Acct #     Acct Type     Status    Balance          Maturity Date
-Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022
+Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022 
                          *****Account Transactions*****
-Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/16/2025   Withdraw        500.00 Failed         500.00 Error:1 Month(s) Isn't A Valid New Term.
-10/16/2025   Withdraw      17615.00 Failed         500.00 $17615.00 Is Over The Balance And Can't be Withdrawn.
-10/16/2025   Withdraw        300.00 Done           200.00
+Date        Transaction   Amount         Status     Balance        Reason For Failure
+10/16/2025  Withdraw      $500.00        Failed     $500.00        Error:1 Month(s) Isn't A Valid New Term.
+10/16/2025  Withdraw      $17615.00      Failed     $500.00        $17615.00 Is Over The Balance And Can't be Withdrawn.
+10/16/2025  Withdraw      $300.00        Done       $200.00
 
 Last N.    First N.   SSN          Acct #     Acct Type     Status    Balance          Maturity Date
-Doe        Jane       456789012    389765 Checking            open      888.56
+Doe        Jane       456789012    389765     Checking      open      888.56           
                          *****Account Transactions*****
-Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/16/2025   Check.          500.21 Failed         888.56 Error: The Check is Post Date.
-10/16/2025   Check.          100.00 Failed         888.56 Error: The Check is Post Date.
-10/16/2025   Check.          100.00 Failed         888.56 Error: The Check is Post Date.
-10/16/2025   Check.          200.00 Failed         888.56 Error: The Check is Post Date.
+Date        Transaction   Amount         Status     Balance        Reason For Failure
+10/16/2025  Check.        $500.21        Failed     $888.56        Error: The Check is Post Date.
+10/16/2025  Check.        $100.00        Failed     $888.56        Error: The Check is Post Date.
+10/16/2025  Check.        $100.00        Failed     $888.56        Error: The Check is Post Date.
+10/16/2025  Check.        $200.00        Failed     $888.56        Error: The Check is Post Date.
 
 Last N.    First N.   SSN          Acct #     Acct Type     Status    Balance          Maturity Date
-Doe        Jane       456789012    123123 Savings            open     8765.43
+Doe        Jane       456789012    123123     Savings       open      8765.43          
                          *****Account Transactions*****
-Date        Transaction   Amount     Status  Balance     Reason For Failure
-10/16/2025   Close A.          0.00 Done          8765.43
-10/16/2025   ReOpen A.         0.00 Failed        8765.43 Can't Reopen Account #123123 it's Already Open.
+Date        Transaction   Amount         Status     Balance        Reason For Failure
+10/16/2025  Close A.      $0.00          Done       $8765.43
+10/16/2025  ReOpen A.     $0.00          Failed     $8765.43       Can't Reopen Account #123123 it's Already Open.
 -----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -252,19 +252,19 @@ Error:999999 isn't a valid SSN Due to it Not Being 9 Digits Long.
 -----------------------------------------------------------------------------------------------------------------------------
 Name                     SSN           Account #      Account Type        Status          Balance          Maturity Date
 -----------------------------------------------------------------------------------------------------------------------------
-Doe        John       123445678    123456 Savings            open      200.55
-Beam       Jim        234556789    567890 Checking            open     1234.56
-Eyre       Jane       345667890    987654 Savings            open        2.33
-Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022
-Finn       Huck       567889012    345678 Checking          closed      123.98
-Doe        John       123445678    222222     CD            open     5000.00           12/12/2023
-Doe        John       123445678    333333 Checking          closed      999.99
-Finn       Huck       567889012    654321 Savings            open        0.00
-Spratt     Jack       678990123    785609 Savings            open      333.33
-Doe        Jane       456789012    389765 Checking            open      888.56
-Doe        Jane       456789012    123123 Savings            open     8765.43
-Rudik      Dingle     001002003    666666     CD          closed      700.43           01/23/2023
-Gori       Steven     777777777    777777     CD            open      400.12           01/25/2023
+Doe        John       123445678    123456     Savings       open      200.55           
+Beam       Jim        234556789    567890     Checking      open      1234.56          
+Eyre       Jane       345667890    987654     Savings       open      2.33             
+Sawyer     Tom        456789012    234567     CD            open      500.00           07/22/2022 
+Finn       Huck       567889012    345678     Checking      closed    123.98           
+Doe        John       123445678    222222     CD            open      5000.00          12/12/2023 
+Doe        John       123445678    333333     Checking      closed    999.99           
+Finn       Huck       567889012    654321     Savings       open      0.00             
+Spratt     Jack       678990123    785609     Savings       open      333.33           
+Doe        Jane       456789012    389765     Checking      open      888.56           
+Doe        Jane       456789012    123123     Savings       open      8765.43          
+Rudik      Dingle     001002003    666666     CD            closed    700.43           01/23/2023 
+Gori       Steven     777777777    777777     CD            open      400.12           01/25/2023 
 -----------------------------------------------------------------------------------------------------------------------------
 Total Amount in Savings Accounts: $9301.64
 Total Amount in Checking Accounts: $3247.09
